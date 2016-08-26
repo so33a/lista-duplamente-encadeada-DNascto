@@ -2,9 +2,6 @@
 #include <stdlib.h>
 #include "listaDupla.h"
 
-
-
-
 link novoNo (int item, link prev, link next) {
   link aux = malloc(sizeof(struct node));
   if (aux == NULL) {
@@ -90,4 +87,42 @@ void destroiLista(ListaDupla l) {
   free(t);
   free(l);
 }
+
+
+link encontraMenor(ListaDupla lista){
+  link aux = lista->head, t = lista->head;
+  while (t != lista->z ) {
+    if(t->item < aux){
+      aux->item = t->item;
+    }
+    t = t->next;
+  }
+  return aux;
+}
+  
+void ordenaLista(ListaDupla lista){
+  link aux = lista->head;
+  link aux2 = aux->next;
+  int troca = 0;
+  do{
+    troca = 0;
+    if(aux->item > aux2->item){
+      link muda;
+      muda->item = aux->item;
+      muda->next = aux->next;
+      muda->prev = aux->prev;
+      aux->item = aux2->item;
+      aux->next = aux2->next;
+      aux->prev = aux2->prev;
+      aux2->item = muda->item;
+      aux2->next = muda->next;
+      aux2->prev = muda->prev;
+      troca = 1;
+    }
+    aux2 = aux->next;
+    aux = aux->next;
+  }while(troca != 0);
+  imprimeLista(&lista);
+}
+
 
